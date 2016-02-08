@@ -1,0 +1,26 @@
+connect --locator=locator1[10334]
+
+put --key=eep1 --value=BOxPYwsaDuKT8Eih4gFHuBAaBO+56EsL --region=bar
+
+put --key=eep2 --value=bpRvr3PqJmExeu/d6ops+bbFB8SE/HT3 --region=bar
+
+put --key=eep3 --value=wIWhA0TcKRV01A3Qh73Mq0/FWc92+J+R --region=bar
+
+put --key=eep4 --value=v7+PIZDIr9znOi3PUXp1XnQ0hpS2YBvc --region=bar
+
+put --key=eep5 --value=5Cdgw2dC8yQihr+0Y9AsHR2pDjztXRtF --region=bar
+
+put --key=eep6 --value=uJ/ZsYzQh++JYkxxqMA73lLyV+H1Tb0z --region=bar
+
+
+put --key=eep1 --value=BOxPYwsaDuKT8Eih4gFHuBAaBO+56EsL --region=foo
+
+put --key=eep2 --value=bpRvr3PqJmExeu/d6ops+bbFB8SE/HT3 --region=foo
+
+put --key=eep3 --value=wIWhA0TcKRV01A3Qh73Mq0/FWc92+J+R --region=foo
+
+put --key=eep4 --value=v7+PIZDIr9znOi3PUXp1XnQ0hpS2YBvc --region=foo
+
+put --key=eep5 --value=5Cdgw2dC8yQihr+0Y9AsHR2pDjztXRtF --region=foo
+
+put --key=eep6 --value=uJ/ZsYzQh++JYkxxqMA73lLyV+H1Tb0z --region=foo

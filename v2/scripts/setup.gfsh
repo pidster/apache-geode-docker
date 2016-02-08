@@ -1,0 +1,3 @@
+connect --locator=locator1[10334]
+create region --name=foo --type=REPLICATE
+create region --name=bar --type=PARTITION --redundant-copies=2

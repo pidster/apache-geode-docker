@@ -1,0 +1,65 @@
+version: '2'
+
+networks:
+  geode_cluster:
+    driver: weavemesh
+
+services:
+  locator1:
+    # image: pidster/geode-runtime:0.1
+    image: geode/runtime:0.1
+    hostname: locator1
+    networks:
+      - geode_cluster
+    volumes:
+      - ./scripts/:/scripts/
+      - ./data/:/data/
+    entrypoint: "sh"
+    command: "/scripts/locator.sh locator1[10334],locator2[10334]"
+    tty: true
+
+  locator2:
+    # image: pidster/geode-runtime:0.1
+    image: geode/runtime:0.1
+    hostname: locator2
+    depends_on: 
+      - locator1
+    networks:
+      - geode_cluster
+    volumes:
+      - ./scripts/:/scripts/
+      - ./data/:/data/
+    entrypoint: "sh"
+    command: "/scripts/locator.sh locator1[10334],locator2[10334]"
+    tty: true
+
+  server:
+    # image: pidster/geode-runtime:0.1
+    image: geode/runtime:0.1
+    depends_on: 
+      - locator1
+      - locator2
+    networks:
+      - geode_cluster
+    # ports:
+    #   - "40404:40404"
+    volumes:
+      - ./scripts/:/scripts/
+      - ./data/:/data/
+    entrypoint: "sh"
+    command: /scripts/server.sh
+    tty: true
+
+  # client:
+  #   image: geode/runtime:0.1
+  #   depends_on:
+  #     - locator1
+  #     - locator2
+  #   networks:
+  #     - geode_cluster
+  #   volumes:
+  #     - ./scripts/:/scripts/
+  #     - ./data/:/data/
+  #   entrypoint: "sh"
+  #   command: /scripts/client.sh
+  #   tty: true
