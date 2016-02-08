@@ -2,7 +2,7 @@
 
 ## Docker 1.10 - Compose v2
 
-See the `v2` sub-directory `README.md`.
+See the [`v2`](v2) sub-directory [`README.md`](v2/README.md).
 
 ## Prerequisite for building
 
