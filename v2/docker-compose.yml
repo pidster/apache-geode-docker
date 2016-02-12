@@ -1,49 +1,36 @@
 version: '2'
 
-networks:
-  geode_cluster:
-    driver: weavemesh
-
 services:
   locator1:
-    # image: geode/runtime:0.1
-    image: pidster/geode-runtime
-    hostname: locator1
-    networks:
-      - geode_cluster
+    # image: pidster/geode-runtime
+    image: apachegeode/geode:1.0.0-incubating.M1
+    hostname: v2_locator1_1
+    network_mode: weave
     volumes:
       - ./scripts/:/scripts/
       - ./data/:/data/
-    entrypoint: "sh"
-    command: "/scripts/locator.sh locator1[10334],locator2[10334]"
-    tty: true
+    command: "/scripts/locator.sh"
 
   locator2:
-    # image: geode/runtime:0.1
-    image: pidster/geode-runtime
-    hostname: locator2
-    depends_on: 
-      - locator1
-    networks:
-      - geode_cluster
+    # image: pidster/geode-runtime
+    image: apachegeode/geode:1.0.0-incubating.M1
+    hostname: v2_locator2_1
+    depends_on:
+      - "locator1"
+    network_mode: weave
     volumes:
       - ./scripts/:/scripts/
       - ./data/:/data/
-    entrypoint: "sh"
-    command: "/scripts/locator.sh locator1[10334],locator2[10334]"
-    tty: true
+    command: "/scripts/locator.sh"
 
   server:
-    # image: geode/runtime:0.1
-    image: pidster/geode-runtime
-    depends_on: 
-      - locator1
-      - locator2
-    networks:
-      - geode_cluster
+    # image: pidster/geode-runtime
+    image: apachegeode/geode:1.0.0-incubating.M1
+    depends_on:
+      - "locator1"
+      - "locator2"
+    network_mode: weave
     volumes:
       - ./scripts/:/scripts/
       - ./data/:/data/
-    entrypoint: "sh"
-    command: /scripts/server.sh
-    tty: true
+    command: "/scripts/server.sh"

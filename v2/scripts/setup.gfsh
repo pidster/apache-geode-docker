@@ -1,3 +1,5 @@
-connect --locator=locator1[10334]
+# connect --locator=locator1[10334]
+connect --locator=v2_locator1_1.v2_geode_cluster[10334]
+
 create region --name=foo --type=REPLICATE
 create region --name=bar --type=PARTITION --redundant-copies=2

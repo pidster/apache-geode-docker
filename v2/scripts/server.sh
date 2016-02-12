@@ -1,27 +1,20 @@
 #!/bin/sh +x
 
-echo "DOMAIN: $HOSTNAME"
+LOCATORS="v2_locator1_1[10334],v2_locator2_1[10334]"
+
 NAME=${HOSTNAME%%.*}
-echo "HOST  : $NAME"
 
-mkdir -p /data/$HOSTNAME
-cd /data/$HOSTNAME
+if [ ! -d /data/$NAME ]; then
+  mkdir /data/$NAME
+  cd /data/$NAME
+fi
 
-# gfsh start server --name=$HOSTNAME --locators=locator1[10334],locator2[10334] --dir=/data/$HOSTNAME/ "$@"
-#
-# while true; do
-#     sleep 10
-# done
+echo "Sleeping for 30s because Geode..."
+sleep 30
 
-GEODE_INSTALL="/incubator-geode/gemfire-assembly/build/install/apache-geode"
-CLASSPATH="$GEODE_INSTALL/lib/gemfire-core-1.0.0-incubating-SNAPSHOT.jar:$GEODE_INSTALL/lib/gemfire-core-dependencies.jar"
+echo "Starting Server ${NAME} with locators ${LOCATORS}"
 
-java -server -classpath $CLASSPATH \
-  -XX:OnOutOfMemoryError='kill -KILL %p' \
-  -Dgemfire.locators=locator1[10334],locator2[10334] \
-  -Dgemfire.use-cluster-configuration=true \
-  -Dgemfire.launcher.registerSignalHandlers=true \
-  -Djava.awt.headless=true \
-  -Dsun.rmi.dgc.server.gcInterval=9223372036854775806 \
-  com.gemstone.gemfire.distributed.ServerLauncher start $NAME \
-  --server-port=40404
+gfsh start server \
+  --name=${NAME} \
+  --locators=${LOCATORS} \
+  --dir=/data/${NAME}

@@ -1,27 +1,22 @@
 #!/bin/sh +x
 
-echo "DOMAIN: $HOSTNAME"
+LOCATORS="v2_locator1_1[10334],v2_locator2_1[10334]"
+
 NAME=${HOSTNAME%%.*}
-echo "HOST  : $NAME"
 
-GEODE_INSTALL="/incubator-geode/gemfire-assembly/build/install/apache-geode"
-CLASSPATH="$GEODE_INSTALL/lib/gemfire-core-1.0.0-incubating-SNAPSHOT.jar:$GEODE_INSTALL/lib/gemfire-core-dependencies.jar"
+echo "Starting Locator ${NAME} on port 10334"
 
-mkdir $NAME
-cd $NAME
+gfsh start locator \
+  --J="-Dgemfire.jmx-manager-hostname-for-clients=${NAME}" \
+  --name=${NAME} \
+  --locators=${LOCATORS} \
+  --mcast-port=0 \
+  --port=10334 \
+  --bind-address=${NAME} \
+  --max-heap=256m \
+  --hostname-for-clients=${NAME}
 
-java -server -classpath $CLASSPATH \
-  -Dgemfire.locators=$@ \
-  -Dgemfire.enable-cluster-configuration=true \
-  -Dgemfire.mcast-port=0 \
-  -Dgemfire.load-cluster-configuration-from-dir=false \
-  -Dgemfire.jmx-manager-hostname-for-clients=$HOSTNAME \
-  -Dgemfire.launcher.registerSignalHandlers=true \
-  -Djava.awt.headless=true \
-  -Dsun.rmi.dgc.server.gcInterval=9223372036854775806 \
-  com.gemstone.gemfire.distributed.LocatorLauncher start $NAME \
-  --redirect-output \
-  --bind-address=$HOSTNAME \
-  --hostname-for-clients=$HOSTNAME \
-  --port=10334 
 
+while true; do
+  sleep 10
+done

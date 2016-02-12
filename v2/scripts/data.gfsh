@@ -1,4 +1,5 @@
-connect --locator=locator1[10334]
+# connect --locator=locator1[10334]
+connect --locator=v2_locator1_1.v2_geode_cluster[10334]
 
 put --key=eep1 --value=BOxPYwsaDuKT8Eih4gFHuBAaBO+56EsL --region=bar
 
