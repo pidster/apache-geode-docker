@@ -2,7 +2,6 @@ version: '2'
 
 services:
   locator1:
-    # image: pidster/geode-runtime
     image: apachegeode/geode:1.0.0-incubating.M1
     hostname: v2_locator1_1
     network_mode: weave
@@ -12,11 +11,10 @@ services:
     command: "/scripts/locator.sh"
 
   locator2:
-    # image: pidster/geode-runtime
     image: apachegeode/geode:1.0.0-incubating.M1
     hostname: v2_locator2_1
     depends_on:
-      - "locator1"
+      - locator1
     network_mode: weave
     volumes:
       - ./scripts/:/scripts/
@@ -24,11 +22,10 @@ services:
     command: "/scripts/locator.sh"
 
   server:
-    # image: pidster/geode-runtime
     image: apachegeode/geode:1.0.0-incubating.M1
     depends_on:
-      - "locator1"
-      - "locator2"
+      - locator1
+      - locator2
     network_mode: weave
     volumes:
       - ./scripts/:/scripts/

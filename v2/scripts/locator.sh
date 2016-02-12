@@ -4,7 +4,14 @@ LOCATORS="v2_locator1_1[10334],v2_locator2_1[10334]"
 
 NAME=${HOSTNAME%%.*}
 
+if [ -f /data/${NAME}/vf.gf.locator.pid ]; then
+  echo "Removing old pid file"
+  rm /data/${NAME}/vf.gf.locator.pid
+fi
+
 echo "Starting Locator ${NAME} on port 10334"
+
+cd /data/
 
 gfsh start locator \
   --J="-Dgemfire.jmx-manager-hostname-for-clients=${NAME}" \
@@ -20,3 +27,4 @@ gfsh start locator \
 while true; do
   sleep 10
 done
+
