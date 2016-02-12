@@ -4,7 +4,7 @@ services:
   locator1:
     image: apachegeode/geode:1.0.0-incubating.M1
     hostname: v2_locator1_1
-    network_mode: weave
+    # network_mode: weave
     volumes:
       - ./scripts/:/scripts/
       - ./data/:/data/
@@ -15,7 +15,7 @@ services:
     hostname: v2_locator2_1
     depends_on:
       - locator1
-    network_mode: weave
+    # network_mode: weave
     volumes:
       - ./scripts/:/scripts/
       - ./data/:/data/
@@ -23,10 +23,11 @@ services:
 
   server:
     image: apachegeode/geode:1.0.0-incubating.M1
+    # hostname: v2_server
     depends_on:
       - locator1
       - locator2
-    network_mode: weave
+    # network_mode: weave
     volumes:
       - ./scripts/:/scripts/
       - ./data/:/data/

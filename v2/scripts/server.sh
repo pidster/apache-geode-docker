@@ -1,6 +1,6 @@
 #!/bin/sh +x
 
-LOCATORS="v2_locator1_1.weave[10334],v2_locator2_1.weave[10334]"
+LOCATORS="v2_locator1_1[10334],v2_locator2_1[10334]"
 
 NAME=${HOSTNAME%%.*}
 
@@ -16,6 +16,7 @@ sleep 60
 echo "Starting Server ${NAME} with locators ${LOCATORS}"
 
 gfsh start server \
+  --J="-Dlog4j.configurationFile=/scripts/log4j2.xml" \
   --name=${NAME} \
   --locators=${LOCATORS} \
   --dir=/data/${NAME}

@@ -9,9 +9,11 @@ if [ -f /data/${NAME}/vf.gf.locator.pid ]; then
   rm /data/${NAME}/vf.gf.locator.pid
 fi
 
-echo "Starting Locator ${NAME} on port 10334"
+if [ ! -d /data/$NAME ]; then
+  mkdir -p /data/$NAME
+fi
 
-cd /data/
+echo "Starting Locator ${NAME} on port 10334"
 
 gfsh start locator \
   --J="-Dgemfire.jmx-manager-hostname-for-clients=${NAME}" \
@@ -21,7 +23,8 @@ gfsh start locator \
   --port=10334 \
   --bind-address=${NAME} \
   --max-heap=256m \
-  --hostname-for-clients=${NAME}
+  --hostname-for-clients=${NAME} \
+  --dir=/data/${NAME}
 
 
 while true; do
